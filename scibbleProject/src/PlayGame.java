@@ -53,7 +53,7 @@ public class PlayGame {
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.err.println("Invalid choice. Please try again.");
                     break;
             }
         }   while (game.menuChoice() != 6);
