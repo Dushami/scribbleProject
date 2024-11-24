@@ -16,7 +16,8 @@ public class GameBoard {
     public String[][] multiplier = new String[15][15];
 
     /**
-     * Place where my special tiles are.
+     * Place where my special tiles are in a method so i dont have to format
+     * when making the board proper
      * Edit: come back to this, there has to be a better way
      */
     public void placeMultipliers(String[][] multiplier) {
@@ -78,8 +79,8 @@ public class GameBoard {
         multiplier[6][12] = "DL";
         multiplier[7][3] = "DL";
         multiplier[7][11] = "DL";
-        multiplier[8][3] = "DL";
-        multiplier[8][11] = "DL";
+        multiplier[8][2] = "DL";
+        multiplier[8][12] = "DL";
         multiplier[11][0] = "DL";
         multiplier[11][7] = "DL";
         multiplier[11][14] = "DL";
@@ -99,37 +100,40 @@ public class GameBoard {
         int columns = board[0].length;
 
         //print numbers along the top of the board
-        System.out.println("    ");
+        System.out.println();
+        System.out.print("    ");
         for (int j = 0; j < columns; j++) {
             System.out.printf(" %2d ", j+1);
         }
-        System.out.println("+");
+        System.out.println();
 
         //print dashes to show top bounds
+        System.out.print("   +");
         for (int j = 0; j < columns; j++) {
-            System.out.println("----");
+            System.out.print("----");
         }
         System.out.println("+");
 
         //numbers along the side, tiles and side bounds
         for (int i = 0; i < rows; i++) {
-            System.out.printf("%2d", i+1);
+            System.out.printf("%2d |", i+1);
             for (int j = 0; j < columns; j++) {
                 if(multiplier[i][j] != null) {
-                    System.out.printf(" %2s ", multiplier[i][j].charAt(0));
+                    System.out.printf(" %2s ", multiplier[i][j]);
                 } else if (board[i][j] != '-') {
                     System.out.printf(" %2c ", board[i][j]);
                 } else {
-                    System.out.println("  . ");
+                    System.out.print("  . ");
                 }
-                System.out.println("|");
             }
+            System.out.println("|");
         }
 
+
         //bottom bounds
-        System.out.println("   +");
+        System.out.print("   +");
         for (int j = 0; j < columns; j++) {
-            System.out.println("---");
+            System.out.print("----");
         }
         System.out.println("+");
     }

@@ -75,6 +75,8 @@ public class PlayGame {
 //        }   while (game.menuChoice() != 6);
         PlayGame game = new PlayGame();
         GameBoard gameBoard = new GameBoard();
+
+        gameBoard.placeMultipliers(gameBoard.multiplier);
         gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
     }
 }
