@@ -35,43 +35,46 @@ public class PlayGame {
     }
 
     public static void main(String[] args) {
+//        PlayGame game = new PlayGame();
+//        do {
+//            switch (game.menuChoice()) {
+//                case 1:
+//                    boolean back = false;
+//                    NewGame game1 = new NewGame();
+//                    while (!back){
+//                        switch (game1.getOpponentChoice()) {
+//                            case 1:
+//                                game1.displayGameSettings();
+//                                break;
+//                            case 2:
+//                                game1.PlayerNames(game1.getNumberPlayers());
+//                                game1.displayGameSettings();
+//                                break;
+//                            case 3:
+//                                back = true;
+//                                break;
+//                        }
+//                    }
+//                    break;
+//                case 2:
+//                    break;
+//                case 3:
+//                    break;
+//                case 4:
+//                    break;
+//                case 5:
+//                    break;
+//                case 6:
+//                    System.out.println("Thank you for playing Scribble, Now Exiting program");
+//                    System.exit(0);
+//                    break;
+//                default:
+//                    System.err.println("Invalid choice. Please try again.");
+//                    break;
+//            }
+//        }   while (game.menuChoice() != 6);
         PlayGame game = new PlayGame();
-        do {
-            switch (game.menuChoice()) {
-                case 1:
-                    boolean back = false;
-                    NewGame game1 = new NewGame();
-                    while (!back){
-                        switch (game1.getOpponentChoice()) {
-                            case 1:
-                                game1.displayGameSettings();
-                                break;
-                            case 2:
-                                game1.PlayerNames(game1.getNumberPlayers());
-                                game1.displayGameSettings();
-                                break;
-                            case 3:
-                                back = true;
-                                break;
-                        }
-                    }
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    System.out.println("Thank you for playing Scribble, Now Exiting program");
-                    System.exit(0);
-                    break;
-                default:
-                    System.err.println("Invalid choice. Please try again.");
-                    break;
-            }
-        }   while (game.menuChoice() != 6);
+        GameBoard gameBoard = new GameBoard();
+        gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
     }
 }
