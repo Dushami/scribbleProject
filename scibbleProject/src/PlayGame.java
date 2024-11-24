@@ -4,7 +4,7 @@
  * PlayGame class, where main method is, it will play the game calling
  * all logic from other classes
  *
- * @author archie hamilton
+ * @author Archie Hamilton
  * @version 1.0
  */
 
@@ -39,6 +39,22 @@ public class PlayGame {
         do {
             switch (game.menuChoice()) {
                 case 1:
+                    boolean back = false;
+                    NewGame game1 = new NewGame();
+                    while (!back){
+                        switch (game1.getOpponentChoice()) {
+                            case 1:
+                                game1.displayGameSettings();
+                                break;
+                            case 2:
+                                game1.PlayerNames(game1.getNumberPlayers());
+                                game1.displayGameSettings();
+                                break;
+                            case 3:
+                                back = true;
+                                break;
+                        }
+                    }
                     break;
                 case 2:
                     break;

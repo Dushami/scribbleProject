@@ -4,7 +4,7 @@
  * gameBoard class, this will display the board and handle new words being
  * placed onto the board.
  *
- * @author archie hamilton
+ * @author Archie Hamilton
  * @version 1.0
  */
 
