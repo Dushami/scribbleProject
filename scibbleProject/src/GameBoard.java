@@ -121,9 +121,9 @@ public class GameBoard {
                 if(multiplier[i][j] != null) {
                     System.out.printf(" %2s ", multiplier[i][j]);
                 } else if (board[i][j] != '-') {
-                    System.out.printf(" %2c ", board[i][j]);
+                    System.out.printf(" %2s ", "." );
                 } else {
-                    System.out.print("  . ");
+                    System.out.print(".");
                 }
             }
             System.out.println("|");
