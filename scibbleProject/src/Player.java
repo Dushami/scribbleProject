@@ -19,17 +19,26 @@ public class Player {
     private char[] letters = new char[7];
 
     /**
-     * Default constructor
+     * Default constructor,
      */
-    public Player(){
+    public Player(String PlayerName, Bag bag) {
         PlayerName = "Player 1";
         PlayerScore = 0;
-        for (int i = 0; i < letters.length; i++){
-            letters[i] = '_';
-        }
+        letters = bag.takeLetters(7);
     }
 
     /**
-     * Method to 
+     * Get Methods
      */
+    public String getPlayerName() {
+        return PlayerName;
+    }
+
+    public int getPlayerScore() {
+        return PlayerScore;
+    }
+
+    public char[] getLetters() {
+        return letters;
+    }
 }
