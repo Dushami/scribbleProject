@@ -73,7 +73,6 @@ public class Bag {
                     }
                 }
             } else {
-                // Fill remaining slots with a placeholder if no tiles are left
                 hand[i] = '_';
             }
         }
