@@ -61,6 +61,11 @@ public class NewGame {
         return opponentType;
     }
 
+    /**
+     * Method to ask users how many players and set game to that number
+     *
+     * @return number of players
+     */
     public int getNumberPlayers(){
         Scanner oppNumber = new Scanner(System.in);
         do {
@@ -104,6 +109,8 @@ public class NewGame {
         }
     }
 
+
+    /**DELETE ME I HAVE NO FUNCTION OTHER THAN TESTING**/
     public void displayGameSettings(){
         System.out.println("----------------------------");
         System.out.println("         Settings           ");
