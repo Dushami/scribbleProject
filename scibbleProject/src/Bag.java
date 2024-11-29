@@ -35,7 +35,7 @@ public class Bag {
         lettersAvailable = new char[lettersLeft];
         int index = 0;
         for (int i = 0 ; i < letters.length; i++){
-            for (int j = 0 ; j < numEachLetters.length; j++){
+            for (int j = 0 ; j < numEachLetters[i]; j++){
                lettersAvailable[index++] = letters[i];
             }
         }

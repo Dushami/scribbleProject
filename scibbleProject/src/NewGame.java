@@ -17,10 +17,10 @@ public class NewGame {
      */
     private int opponentType;
     private int numberPlayers;
-    private String playerName1;
-    private String playerName2;
-    private String playerName3;
-    private String playerName4;
+    public String playerName1;
+    public String playerName2;
+    public String playerName3;
+    public String playerName4;
 
     /**
      * Default constructor, initializes all names to "Player" followed by their number

@@ -41,14 +41,42 @@ public class PlayGame {
                 case 1:
                     boolean back = false;
                     NewGame game1 = new NewGame();
+                    GameBoard gameBoard = new GameBoard();
+                    PlayerMove playerMove = new PlayerMove();
                     while (!back){
                         switch (game1.getOpponentChoice()) {
                             case 1:
                                 game1.displayGameSettings();
                                 break;
                             case 2:
-                                game1.PlayerNames(game1.getNumberPlayers());
+                                /**
+                                 * When Player opts to play against others, get number of players and their names,
+                                 * display a fresh board and prompt to insert a word
+                                 */
+                                int numPlayers = game1.getNumberPlayers();
+                                game1.PlayerNames(numPlayers);
 
+                                Bag bag = new Bag();
+                                Player[] players = new Player[numPlayers];
+                                for (int i = 0; i < numPlayers; i++) {
+                                    String playerName = (i == 0) ? game1.playerName1 : (i == 1) ? game1.playerName2 : (i == 2) ? game1.playerName3 : game1.playerName4;
+                                    players[i] = new Player(playerName, bag);
+                                }
+
+                                gameBoard.placeMultipliers(gameBoard.multiplier);
+                                boolean gameOngoing = true; // You will need a condition to end the game.
+                                while (gameOngoing) {
+                                    for (Player player : players) {
+                                        // Display current board state
+                                        gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
+
+                                        // Prompt player for their move
+                                        String word = playerMove.getPlayerWord(player);
+
+                                        // TODO: Add logic for word placement and validation
+                                        System.out.println(player.getPlayerName() + " played the word: " + word);
+                                    }
+                                }
                                 break;
                             case 3:
                                 back = true;

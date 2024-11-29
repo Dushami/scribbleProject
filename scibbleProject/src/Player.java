@@ -22,7 +22,7 @@ public class Player {
      * Default constructor,
      */
     public Player(String PlayerName, Bag bag) {
-        PlayerName = "Player 1";
+        this.PlayerName = PlayerName;
         PlayerScore = 0;
         letters = bag.takeLetters(7);
     }

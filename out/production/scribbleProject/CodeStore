@@ -1,0 +1,4 @@
+
+                                game1.PlayerNames(game1.getNumberPlayers());
+                                gameBoard.placeMultipliers(gameBoard.multiplier);
+                                gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
