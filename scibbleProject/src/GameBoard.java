@@ -99,38 +99,55 @@ public class GameBoard {
         int rows = board.length;
         int columns = board[0].length;
 
-        //print numbers along the top of the board
+        /** Add colour to the multipliers to make board easier to tell between these and placed words*/
+        final String Reset = "\033[0m";
+        final String TW = "\033[31m";
+        final String DW = "\033[34m";
+        final String TL = "\033[32m";
+        final String DL = "\033[33m";
+
         System.out.println();
         System.out.print("    ");
         for (int j = 0; j < columns; j++) {
-            System.out.printf(" %2d ", j+1);
+            System.out.printf(" %2d ", j + 1);
         }
         System.out.println();
-
-        //print dashes to show top bounds
         System.out.print("   +");
         for (int j = 0; j < columns; j++) {
             System.out.print("----");
         }
         System.out.println("+");
-
-        //numbers along the side, tiles and side bounds
         for (int i = 0; i < rows; i++) {
-            System.out.printf("%2d |", i+1);
+            System.out.printf("%2d |", i + 1);
             for (int j = 0; j < columns; j++) {
-                if(multiplier[i][j] != null) {
-                    System.out.printf(" %2s ", multiplier[i][j]);
-                } else if (board[i][j] != '-') {
-                    System.out.printf(" %2s ", "." );
+                if (Character.isLetter(board[i][j])) {
+                    // Display placed letters normally
+                    System.out.printf(" %2s ", board[i][j]);
+                } else if (multiplier[i][j] != null) {
+                    // Apply color based on multiplier type
+                    String color = Reset;
+                    switch (multiplier[i][j]) {
+                        case "TW":
+                            color = TW;
+                            break;
+                        case "DW":
+                            color = DW;
+                            break;
+                        case "TL":
+                            color = TL;
+                            break;
+                        case "DL":
+                            color = DL;
+                            break;
+                    }
+                    System.out.printf(" %s%2s%s ", color, multiplier[i][j], Reset);
                 } else {
-                    System.out.print(".");
+                    // Display empty spaces
+                    System.out.printf(" %2s ", ".");
                 }
             }
             System.out.println("|");
         }
-
-
-        //bottom bounds
         System.out.print("   +");
         for (int j = 0; j < columns; j++) {
             System.out.print("----");
@@ -139,4 +156,42 @@ public class GameBoard {
     }
 
 
+    /**
+     * Method to actually verify and place the word onto the board
+     */
+    public boolean placeWord(String word, int[] startCoords, char direction) {
+        int row = startCoords[0];
+        int column = startCoords[1];
+
+        /** Validate if the word can fit in the board*/
+        if (direction == 'H' && (column + word.length() > 15)) {
+            System.err.println("Word does not fit horizontally.");
+            return false;
+        } else if (direction == 'V' && (row + word.length() > 15)) {
+            System.err.println("Word does not fit vertically.");
+            return false;
+        }
+
+        /** Check if the space is free*/
+        for (int i = 0; i < word.length(); i++) {
+            int rowNum = row + (direction == 'V' ? i : 0);
+            int colNum = column + (direction == 'H' ? i : 0);
+
+            // Skip if the cell contains a multiplier or is empty ('.')
+            if (Character.isLetter(board[rowNum][colNum])) {
+                System.err.println("Cannot place word, space is already occupied by another letter.");
+                return false;
+            }
+        }
+
+        /** update board to place the word*/
+        for (int i = 0; i < word.length(); i++) {
+            int rowNum = row + (direction == 'V' ? i : 0);
+            int colNum = column + (direction == 'H' ? i : 0);
+
+            board[rowNum][colNum] = word.charAt(i);
+        }
+
+        return true;
+    }
 }

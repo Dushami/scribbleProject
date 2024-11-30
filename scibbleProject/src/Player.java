@@ -19,7 +19,7 @@ public class Player {
     private char[] letters = new char[7];
 
     /**
-     * Default constructor,
+     * Default constructor
      */
     public Player(String PlayerName, Bag bag) {
         this.PlayerName = PlayerName;

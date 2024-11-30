@@ -72,10 +72,21 @@ public class PlayGame {
 
                                         // Prompt player for their move
                                         String word = playerMove.getPlayerWord(player);
+                                        int[] coords = playerMove.getWordCoordinates();
+                                        char direction = playerMove.getWordDirection();
 
-                                        // TODO: Add logic for word placement and validation
-                                        System.out.println(player.getPlayerName() + " played the word: " + word);
+                                        // Attempt to place the word on the board
+                                        boolean success = gameBoard.placeWord(word, coords, direction);
+                                        if (success) {
+                                            System.out.println(player.getPlayerName() + " successfully placed the word: " + word);
+                                        } else {
+                                            System.out.println("Failed to place the word. Try again.");
+                                        }
+
+                                        // Redisplay the updated board
+                                        gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
                                     }
+
                                 }
                                 break;
                             case 3:

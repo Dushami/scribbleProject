@@ -24,17 +24,24 @@ public class PlayerMove {
      */
     public String getPlayerWord(Player player) {
         Scanner playerWord = new Scanner(System.in);
+        System.out.println("-------------------------------------------------------------");
         System.out.println(player.getPlayerName() + ", your current tiles: " + String.valueOf(player.getLetters()));
+        System.out.println();
         System.out.print("Please enter the word you want to play: ");
         return playerWord.nextLine().toUpperCase();
     }
+
+    /**
+     * Method to validate that the player has the correct letters to form the word that they typed
+     * peram
+     */
 
 
     /**
      * Ask user to unput coordinate of first letter
      * @return
      */
-    public int[] getPlacementCoordinates() {
+    public int[] getWordCoordinates() {
         Scanner input = new Scanner(System.in);
         int[] coordinates = new int[2];
         boolean validInput = false;
@@ -64,7 +71,11 @@ public class PlayerMove {
         return coordinates;
     }
 
-    public char getPlacementDirection() {
+    /**
+     * ask the user if they want to place the word horizontally or vertically
+     * @return
+     */
+    public char getWordDirection() {
         Scanner input = new Scanner(System.in);
         char direction;
 
