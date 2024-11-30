@@ -161,8 +161,9 @@ public class GameBoard {
     public boolean placeWord(String word, int[] startCoords, char direction) {
         int row = startCoords[0];
         int column = startCoords[1];
+        boolean connectsToExisting = false;
 
-        /** Validate if the word can fit in the board*/
+        /** Check the word can fit on the board*/
         if (direction == 'H' && (column + word.length() > 15)) {
             System.err.println("Word does not fit horizontally.");
             return false;
@@ -171,19 +172,23 @@ public class GameBoard {
             return false;
         }
 
-        /** Check if the space is free*/
+        /** Dont let invalid letters place*/
         for (int i = 0; i < word.length(); i++) {
             int rowNum = row + (direction == 'V' ? i : 0);
             int colNum = column + (direction == 'H' ? i : 0);
 
-            // Skip if the cell contains a multiplier or is empty ('.')
-            if (Character.isLetter(board[rowNum][colNum])) {
-                System.err.println("Cannot place word, space is already occupied by another letter.");
-                return false;
+            char existingLetter = board[rowNum][colNum];
+            if (Character.isLetter(existingLetter)) {
+                if (existingLetter != word.charAt(i)) {
+                    System.err.println("Letter at (" + (rowNum + 1) + ", " + (colNum + 1) + ") do NOT match.");
+                    return false;
+                } else {
+                    connectsToExisting = true;
+                }
             }
         }
 
-        /** check if it is the first word*/
+        /** Make sure words connect and first word connects to the centre*/
         boolean isFirstWord = true;
         for (char[] rows : board) {
             for (char tile : rows) {
@@ -195,7 +200,6 @@ public class GameBoard {
             if (!isFirstWord) break;
         }
 
-        /** Make sure first word connects to the centre*/
         if (isFirstWord) {
             boolean onCentre = false;
 
@@ -213,9 +217,12 @@ public class GameBoard {
                 System.err.println("The first word must connect to the centre square (8,8).");
                 return false;
             }
+        } else if (!connectsToExisting) {
+            System.err.println("The word must connect to an existing word.");
+            return false;
         }
 
-        /** update board to place the word*/
+        /** display words on the board*/
         for (int i = 0; i < word.length(); i++) {
             int rowNum = row + (direction == 'V' ? i : 0);
             int colNum = column + (direction == 'H' ? i : 0);
@@ -225,4 +232,5 @@ public class GameBoard {
 
         return true;
     }
+
 }

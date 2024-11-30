@@ -80,7 +80,9 @@ public class PlayGame {
                                             System.out.println(player.getPlayerName() + " successfully placed the word: " + word + ": INSERT THE NUM OF POINTS THIS WORD SCORED LATER ************" );
                                             System.out.println("+--------------------------------------------------------+");
                                         } else {
+                                            System.out.println("+----------------------------------+");
                                             System.out.println("Failed to place the word. Try again.");
+                                            System.out.println("+----------------------------------+");
                                         }
                                     }
                                 }
