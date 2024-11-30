@@ -155,7 +155,6 @@ public class GameBoard {
         System.out.println("+");
     }
 
-
     /**
      * Method to actually verify and place the word onto the board
      */
@@ -180,6 +179,38 @@ public class GameBoard {
             // Skip if the cell contains a multiplier or is empty ('.')
             if (Character.isLetter(board[rowNum][colNum])) {
                 System.err.println("Cannot place word, space is already occupied by another letter.");
+                return false;
+            }
+        }
+
+        /** check if it is the first word*/
+        boolean isFirstWord = true;
+        for (char[] rows : board) {
+            for (char tile : rows) {
+                if (Character.isLetter(tile)) {
+                    isFirstWord = false;
+                    break;
+                }
+            }
+            if (!isFirstWord) break;
+        }
+
+        /** Make sure first word connects to the centre*/
+        if (isFirstWord) {
+            boolean onCentre = false;
+
+            for (int i = 0; i < word.length(); i++) {
+                int rowNum = row + (direction == 'V' ? i : 0);
+                int colNum = column + (direction == 'H' ? i : 0);
+
+                if (rowNum == 7 && colNum == 7) {
+                    onCentre = true;
+                    break;
+                }
+            }
+
+            if (!onCentre) {
+                System.err.println("The first word must connect to the centre square (8,8).");
                 return false;
             }
         }

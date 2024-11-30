@@ -47,14 +47,13 @@ public class PlayerMove {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.print("Enter the coordinate of the first letter (e.g., 4 8): ");
-            String[] inputCoords = input.nextLine().split(" ");
-            if (inputCoords.length == 2) {
+            System.out.print("Enter the coordinate of the first letter, Row then Column (e.g., 4 8): ");
+            String[] inputCoordinate = input.nextLine().split(" ");
+            if (inputCoordinate.length == 2) {
                 try {
-                    coordinates[0] = Integer.parseInt(inputCoords[0]) - 1;
-                    coordinates[1] = Integer.parseInt(inputCoords[1]) - 1;
+                    coordinates[0] = Integer.parseInt(inputCoordinate[0]) - 1;
+                    coordinates[1] = Integer.parseInt(inputCoordinate[1]) - 1;
 
-                    // Validate that coordinates are within bounds
                     if (coordinates[0] >= 0 && coordinates[0] < 15 && coordinates[1] >= 0 && coordinates[1] < 15) {
                         validInput = true;
                     } else {

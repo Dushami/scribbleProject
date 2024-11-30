@@ -64,29 +64,25 @@ public class PlayGame {
                                 }
 
                                 gameBoard.placeMultipliers(gameBoard.multiplier);
-                                boolean gameOngoing = true; // You will need a condition to end the game.
+                                boolean gameOngoing = true;
                                 while (gameOngoing) {
                                     for (Player player : players) {
-                                        // Display current board state
                                         gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
-
-                                        // Prompt player for their move
                                         String word = playerMove.getPlayerWord(player);
+                                        System.out.println();
                                         int[] coords = playerMove.getWordCoordinates();
+                                        System.out.println();
                                         char direction = playerMove.getWordDirection();
 
-                                        // Attempt to place the word on the board
                                         boolean success = gameBoard.placeWord(word, coords, direction);
                                         if (success) {
-                                            System.out.println(player.getPlayerName() + " successfully placed the word: " + word);
+                                            System.out.println("+--------------------------------------------------------+");
+                                            System.out.println(player.getPlayerName() + " successfully placed the word: " + word + ": INSERT THE NUM OF POINTS THIS WORD SCORED LATER ************" );
+                                            System.out.println("+--------------------------------------------------------+");
                                         } else {
                                             System.out.println("Failed to place the word. Try again.");
                                         }
-
-                                        // Redisplay the updated board
-                                        gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
                                     }
-
                                 }
                                 break;
                             case 3:
