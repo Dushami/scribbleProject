@@ -41,4 +41,29 @@ public class Player {
     public char[] getLetters() {
         return letters;
     }
+
+    /**
+     * Method to Remove and refill when used
+     */
+    public void updateHand(String word, Bag bag) {
+        for (char letter : word.toCharArray()) {
+            for (int i = 0; i < letters.length; i++) {
+                if (letters[i] == letter) {
+                    letters[i] = '_';
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < letters.length; i++) {
+            if (letters[i] == '_') {
+                letters[i] = bag.takeLetters(1)[0];
+            }
+        }
+    }
+
+    /** Upadte players score*/
+    public void updateScore(int score) {
+        PlayerScore += score;
+    }
 }

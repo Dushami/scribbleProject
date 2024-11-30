@@ -85,4 +85,38 @@ public class PlayerMove {
 
         return direction;
     }
+
+    /** Method allowing players to only use the letters they have*/
+    public boolean validateWord(String word, Player player, GameBoard board, int[] startCoords, char direction) {
+        char[] playerLetters = player.getLetters();
+        int[] letterCounts = new int[26];
+        for (char inBag : playerLetters) {
+            if (Character.isLetter(inBag)) {
+                letterCounts[inBag - 'A']++;
+            }
+        }
+
+        /** allow use of letters on the board previously*/
+        int row = startCoords[0];
+        int col = startCoords[1];
+
+        for (int i = 0; i < word.length(); i++) {
+            int currentRow = row + (direction == 'V' ? i : 0);
+            int currentCol = col + (direction == 'H' ? i : 0);
+            if (currentRow < 15 && currentCol < 15 && Character.isLetter(board.board[currentRow][currentCol])) {
+                char boardLetter = board.board[currentRow][currentCol];
+                letterCounts[boardLetter - 'A']++;
+            }
+        }
+
+        for (char inHand : word.toCharArray()) {
+            if (letterCounts[inHand - 'A'] > 0) {
+                letterCounts[inHand - 'A']--;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

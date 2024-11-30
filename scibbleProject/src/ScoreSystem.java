@@ -42,4 +42,19 @@ public class ScoreSystem {
         scoreComputer = computerScore;
         wordScore = wordValue;
     }
+
+    private static final int[] letterValues = {
+            1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3,
+            1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10
+    };
+
+    public static int wordScore(String word) {
+        int score = 0;
+        for (char letter : word.toCharArray()) {
+            if (Character.isLetter(letter)) {
+                score += letterValues[Character.toUpperCase(letter) - 'A'];
+            }
+        }
+        return score;
+    }
 }

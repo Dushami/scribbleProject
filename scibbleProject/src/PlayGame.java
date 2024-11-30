@@ -70,19 +70,26 @@ public class PlayGame {
                                         gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
                                         String word = playerMove.getPlayerWord(player);
                                         System.out.println();
-                                        int[] coords = playerMove.getWordCoordinates();
+                                        int[] coordinates = playerMove.getWordCoordinates();
                                         System.out.println();
                                         char direction = playerMove.getWordDirection();
 
-                                        boolean success = gameBoard.placeWord(word, coords, direction);
-                                        if (success) {
-                                            System.out.println("+--------------------------------------------------------+");
-                                            System.out.println(player.getPlayerName() + " successfully placed the word: " + word + ": INSERT THE NUM OF POINTS THIS WORD SCORED LATER ************" );
-                                            System.out.println("+--------------------------------------------------------+");
-                                        } else {
-                                            System.out.println("+----------------------------------+");
-                                            System.out.println("Failed to place the word. Try again.");
-                                            System.out.println("+----------------------------------+");
+                                        if(playerMove.validateWord(word, player, gameBoard, coordinates, direction)){
+                                            boolean success = gameBoard.placeWord(word, coordinates, direction);
+                                            if (success) {
+                                                int wordScore = ScoreSystem.wordScore(word);
+                                                player.updateScore(wordScore);
+                                                player.updateHand(word, bag);
+                                                System.out.println("+--------------------------------------------------------+");
+                                                System.out.println(player.getPlayerName() + " successfully placed the word: " + word + ": +" + wordScore + " Points");
+                                                System.out.println("+--------------------------------------------------------+");
+                                            } else {
+                                                System.out.println("+----------------------------------+");
+                                                System.out.println("Failed to place the word. Try again.");
+                                                System.out.println("+----------------------------------+");
+                                            }
+                                        } else{
+                                            System.out.println("You dont have the letters for that word, Try Again");
                                         }
                                     }
                                 }
@@ -110,10 +117,5 @@ public class PlayGame {
                     break;
             }
         }   while (game.menuChoice() != 6);
-//        PlayGame game = new PlayGame();
-//        GameBoard gameBoard = new GameBoard();
-//
-//        gameBoard.placeMultipliers(gameBoard.multiplier);
-//        gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
     }
 }
