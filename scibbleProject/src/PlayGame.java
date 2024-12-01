@@ -23,10 +23,9 @@ public class PlayGame {
         System.out.println(
                         "1. Play New Game\n" +
                         "2. Load Saved Game\n" +
-                        "3. Save a Game\n" +
-                        "4. Score History\n" +
-                        "5. How to Play Scribble\n" +
-                        "6. Exit"
+                        "3. Score History\n" +
+                        "4. How to Play Scribble\n" +
+                        "5. Exit"
         );
         System.out.println("--------------------");
         System.out.println("Please enter your choice (1-6): ");
@@ -75,8 +74,19 @@ public class PlayGame {
                                             System.out.println();
                                             String word = playerMove.getPlayerWord(player);
 
-                                            if (word.equals("*")) {
-                                                System.out.println(player.getPlayerName() + " has skipped turn.");
+                                            if (word.equalsIgnoreCase("/save")) {
+                                                SaveLoad saveLoad = new SaveLoad();
+                                                String gameState = saveLoad.getGame(gameBoard, players);
+                                                saveLoad.saveGame(gameState);
+                                                System.out.println("Game saved successfully!");
+                                                continue;
+                                            } else if (word.equalsIgnoreCase("/quit")) {
+                                                System.out.println("Exiting to the main menu...");
+                                                gameOngoing = false;
+                                                back = true;
+                                                break;
+                                            } else if (word.equals("*")) {
+                                                System.out.println(player.getPlayerName() + " has skipped their turn.");
                                                 break;
                                             }
 
@@ -120,21 +130,76 @@ public class PlayGame {
                     }
                     break;
                 case 2:
+                    PlayerMove playerMoveLoad = new PlayerMove();
+                    SaveLoad saveLoad = new SaveLoad();
+                    GameBoard loadedBoard = new GameBoard();
+                    Bag loadedBag = new Bag();
+                    Player[] loadedPlayers = new Player[4];
+                    int numPlayers = saveLoad.loadGame(loadedBoard, loadedPlayers, loadedBag);
+
+                    boolean gameResumed = true;
+                    while (gameResumed) {
+                        for (int i = 0; i < numPlayers; i++) {
+                            Player player = loadedPlayers[i];
+                            boolean wordPlaced = false;
+                            while (!wordPlaced) {
+                                loadedBoard.displayBoard(loadedBoard.board, loadedBoard.multiplier);
+                                System.out.println("----------------------------------------------------------------");
+                                System.out.println("Type '/save' to save your game or '/quit' to exit without saving");
+                                System.out.println();
+                                String word = playerMoveLoad.getPlayerWord(player);
+
+                                if (word.equalsIgnoreCase("/save")) {
+                                    String gameState = saveLoad.getGame(loadedBoard, loadedPlayers);
+                                    saveLoad.saveGame(gameState);
+                                    System.out.println("Game saved successfully!");
+                                    continue;
+                                } else if (word.equalsIgnoreCase("/quit")) {
+                                    System.out.println("Exiting to the main menu...");
+                                    gameResumed = false;
+                                    break;
+                                } else if (word.equals("*")) {
+                                    System.out.println(player.getPlayerName() + " has skipped their turn.");
+                                    break;
+                                }
+
+                                int[] coordinates = playerMoveLoad.getWordCoordinates();
+                                char direction = playerMoveLoad.getWordDirection();
+
+                                if (playerMoveLoad.validateWord(word, player, loadedBoard, coordinates, direction)) {
+                                    boolean success = loadedBoard.placeWord(word, coordinates, direction);
+                                    if (success) {
+                                        int wordScore = ScoreSystem.wordScore(word);
+                                        player.updateScore(wordScore);
+                                        player.updateHand(word, loadedBag);
+                                        System.out.println("+--------------------------------------------------------+");
+                                        System.out.println(player.getPlayerName() + " successfully placed the word: " + word + ": +" + wordScore + " Points");
+                                        System.out.println("+--------------------------------------------------------+");
+                                        wordPlaced = true;
+                                    } else {
+                                        System.out.println("+----------------------------------+");
+                                        System.out.println("Failed to place the word. Try again.");
+                                        System.out.println("+----------------------------------+");
+                                    }
+                                } else {
+                                    System.err.println("You don't have the letters for that word. Try again or enter '*' to skip.");
+                                }
+                            }
+                        }
+                    }
                     break;
                 case 3:
                     break;
                 case 4:
                     break;
                 case 5:
-                    break;
-                case 6:
                     System.out.println("Thank you for playing Scribble, Now Exiting program");
                     System.exit(0);
                     break;
                 default:
-                    System.err.println("Invalid choice. Please try again.");
+                    System.err.println("Invalid choice. Please enter 1-5 for a valid choice.");
                     break;
             }
-        }   while (game.menuChoice() != 6);
+        }   while (game.menuChoice() != 5);
     }
 }
