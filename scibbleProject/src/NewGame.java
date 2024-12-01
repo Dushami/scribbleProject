@@ -53,9 +53,8 @@ public class NewGame {
         System.out.println("------------------------------");
         System.out.println(
                         "Select your Opponents: \n" +
-                        "1. Computer \n" +
-                        "2. Other Players \n" +
-                        "3. BACK"
+                        "1. Other Players \n" +
+                        "2. BACK"
         );
         opponentType = oppType.nextInt();
         return opponentType;

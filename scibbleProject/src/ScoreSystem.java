@@ -48,13 +48,49 @@ public class ScoreSystem {
             1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10
     };
 
-    public static int wordScore(String word) {
+    public static int wordScore(String word, int[] startCoords, char direction, String[][] multiplier, char[][] board) {
         int score = 0;
-        for (char letter : word.toCharArray()) {
-            if (Character.isLetter(letter)) {
-                score += letterValues[Character.toUpperCase(letter) - 'A'];
+        int wordMultiplier = 1;
+
+        for (int i = 0; i < word.length(); i++) {
+            int row = startCoords[0] + (direction == 'V' ? i : 0);
+            int column = startCoords[1] + (direction == 'H' ? i : 0);
+            char letter = word.charAt(i);
+
+            int letterScore = letterValues[Character.toUpperCase(letter) - 'A'];
+            score += letterScore;
+
+            if (multiplier[row][column] != null) {
+                switch (multiplier[row][column]) {
+                    case "DL":
+                        score += letterScore;
+                        break;
+                    case "TL":
+                        score += 2 * letterScore;
+                        break;
+                    case "DW":
+                        wordMultiplier *= 2;
+                        break;
+                    case "TW":
+                        wordMultiplier *= 3;
+                        break;
+                }
             }
         }
-        return score;
+
+        return score * wordMultiplier;
+    }
+
+    /**
+     * method to display all the current scores
+     */
+    public static void displayAllScores(Player[] players) {
+        System.out.println("+----------------------------+");
+        System.out.println("|          Leaderboard       |");
+        System.out.println("+----------------------------+");
+        for (Player player : players) {
+            System.out.printf("%s: %d Points\n", player.getPlayerName(), player.getPlayerScore());
+        }
+        System.out.println("+----------------------------+");
     }
 }

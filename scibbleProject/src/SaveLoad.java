@@ -116,4 +116,48 @@ public class SaveLoad {
         }
         return numPlayers;
     }
+
+    /**
+     * method which will add the result of games to a text file so they can be viewed in the game histoy option of the menu
+     *
+     * @param players to show who played this game
+     * @param winnerName Shows which of the players won said game
+     */
+    public void addToHistory(Player[] players, String winnerName) {
+        String fileName = "game_results.txt";
+        try (FileWriter writer = new FileWriter(fileName, true)) {
+            writer.write("Game Results:\n");
+            writer.write("Winner: " + winnerName + "\n");
+            writer.write("Players and Scores:\n");
+            for (Player player : players) {
+                writer.write(player.getPlayerName() + ": " + player.getPlayerScore() + " points\n");
+            }
+            writer.write("-----------------------------\n");
+            System.out.println("Game results logged to " + fileName);
+        } catch (IOException e) {
+            System.err.println("Error saving game results: " + e.getMessage());
+        }
+    }
+
+    /**
+     * loads the file and displays the game history
+     */
+    public void displayHistory() {
+        String fileName = "game_results.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            String winnerColour = "\033[33m";
+            String resetColour = "\033[0m";
+
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("Winner: ")) {
+                    System.out.println(winnerColour + line + resetColour);
+                } else {
+                    System.out.println(line);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading game history: " + e.getMessage());
+        }
+    }
 }

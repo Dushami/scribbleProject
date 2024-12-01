@@ -35,8 +35,10 @@ public class PlayGame {
 
     public static void main(String[] args) {
         PlayGame game = new PlayGame();
+        int choice;
         do {
-            switch (game.menuChoice()) {
+            choice = game.menuChoice();
+            switch (choice) {
                 case 1:
                     boolean back = false;
                     NewGame game1 = new NewGame();
@@ -45,9 +47,6 @@ public class PlayGame {
                     while (!back){
                         switch (game1.getOpponentChoice()) {
                             case 1:
-                                game1.displayGameSettings();
-                                break;
-                            case 2:
                                 /**
                                  * When Player opts to play against others, get number of players and their names,
                                  * display a fresh board and prompt to insert a word
@@ -98,12 +97,28 @@ public class PlayGame {
                                             if (playerMove.validateWord(word, player, gameBoard, coordinates, direction)) {
                                                 boolean success = gameBoard.placeWord(word, coordinates, direction);
                                                 if (success) {
-                                                    int wordScore = ScoreSystem.wordScore(word);
+                                                    int wordScore = ScoreSystem.wordScore(word, coordinates, direction, gameBoard.multiplier, gameBoard.board);
                                                     player.updateScore(wordScore);
                                                     player.updateHand(word, bag);
                                                     System.out.println("+--------------------------------------------------------+");
                                                     System.out.println(player.getPlayerName() + " successfully placed the word: " + word + ": +" + wordScore + " Points");
+                                                    System.out.println();
+                                                    ScoreSystem.displayAllScores(players);
                                                     System.out.println("+--------------------------------------------------------+");
+
+                                                    if (player.getPlayerScore() >= 250) {
+                                                        System.out.println("+--------------------------------------------------------+");
+                                                        System.out.println("Congratulations " + player.getPlayerName() + "! You have won the game with " + player.getPlayerScore() + " points!");
+                                                        System.out.println("+--------------------------------------------------------+");
+
+                                                        SaveLoad saveLoad = new SaveLoad();
+                                                        saveLoad.addToHistory(players, player.getPlayerName());
+
+                                                        gameOngoing = false;
+                                                        back = true;
+                                                        break;
+                                                    }
+
                                                     wordPlaced = true;
                                                 } else {
                                                     System.out.println("+----------------------------------+");
@@ -120,10 +135,13 @@ public class PlayGame {
                                                 saveLoad.saveGame(gameState);
                                             }
                                         }
+                                        if (!gameOngoing) {
+                                            break;
+                                        }
                                     }
                                 }
                                 break;
-                            case 3:
+                            case 2:
                                 back = true;
                                 break;
                         }
@@ -169,7 +187,7 @@ public class PlayGame {
                                 if (playerMoveLoad.validateWord(word, player, loadedBoard, coordinates, direction)) {
                                     boolean success = loadedBoard.placeWord(word, coordinates, direction);
                                     if (success) {
-                                        int wordScore = ScoreSystem.wordScore(word);
+                                        int wordScore = ScoreSystem.wordScore(word, coordinates, direction, loadedBoard.multiplier, loadedBoard.board);
                                         player.updateScore(wordScore);
                                         player.updateHand(word, loadedBag);
                                         System.out.println("+--------------------------------------------------------+");
@@ -189,6 +207,11 @@ public class PlayGame {
                     }
                     break;
                 case 3:
+                    SaveLoad historyLoader = new SaveLoad();
+                    System.out.println("Game History:");
+                    System.out.println("-----------------------------");
+                    historyLoader.displayHistory();
+                    System.out.println("-----------------------------");
                     break;
                 case 4:
                     boolean goBack = false;
@@ -260,6 +283,6 @@ public class PlayGame {
                     System.err.println("Invalid choice. Please enter 1-5 for a valid choice.");
                     break;
             }
-        }   while (game.menuChoice() != 5);
+        }   while (choice != 5);
     }
 }
