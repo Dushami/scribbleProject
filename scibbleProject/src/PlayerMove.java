@@ -32,12 +32,6 @@ public class PlayerMove {
     }
 
     /**
-     * Method to validate that the player has the correct letters to form the word that they typed
-     * peram
-     */
-
-
-    /**
      * Ask user to unput coordinate of first letter
      * @return
      */
@@ -57,13 +51,13 @@ public class PlayerMove {
                     if (coordinates[0] >= 0 && coordinates[0] < 15 && coordinates[1] >= 0 && coordinates[1] < 15) {
                         validInput = true;
                     } else {
-                        System.out.println("Invalid input! Coordinates must be between 1 and 15.");
+                        System.err.println("Invalid input! Coordinates must be between 1 and 15.");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid input! Please enter two numbers separated by a space.");
+                    System.err.println("Invalid input! Please enter two numbers separated by a space.");
                 }
             } else {
-                System.out.println("Invalid input! Please enter two numbers separated by a space.");
+                System.err.println("Invalid input! Please enter two numbers separated by a space.");
             }
         }
 

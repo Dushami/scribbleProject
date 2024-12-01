@@ -67,29 +67,48 @@ public class PlayGame {
                                 boolean gameOngoing = true;
                                 while (gameOngoing) {
                                     for (Player player : players) {
-                                        gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
-                                        String word = playerMove.getPlayerWord(player);
-                                        System.out.println();
-                                        int[] coordinates = playerMove.getWordCoordinates();
-                                        System.out.println();
-                                        char direction = playerMove.getWordDirection();
+                                        boolean wordPlaced = false;
+                                        while (!wordPlaced) {
+                                            gameBoard.displayBoard(gameBoard.board, gameBoard.multiplier);
+                                            System.out.println("----------------------------------------------------------------");
+                                            System.out.println("Type '/save' to save your game or '/quit' to exit without saving");
+                                            System.out.println();
+                                            String word = playerMove.getPlayerWord(player);
 
-                                        if(playerMove.validateWord(word, player, gameBoard, coordinates, direction)){
-                                            boolean success = gameBoard.placeWord(word, coordinates, direction);
-                                            if (success) {
-                                                int wordScore = ScoreSystem.wordScore(word);
-                                                player.updateScore(wordScore);
-                                                player.updateHand(word, bag);
-                                                System.out.println("+--------------------------------------------------------+");
-                                                System.out.println(player.getPlayerName() + " successfully placed the word: " + word + ": +" + wordScore + " Points");
-                                                System.out.println("+--------------------------------------------------------+");
-                                            } else {
-                                                System.out.println("+----------------------------------+");
-                                                System.out.println("Failed to place the word. Try again.");
-                                                System.out.println("+----------------------------------+");
+                                            if (word.equals("*")) {
+                                                System.out.println(player.getPlayerName() + " has skipped turn.");
+                                                break;
                                             }
-                                        } else{
-                                            System.out.println("You dont have the letters for that word, Try Again");
+
+                                            System.out.println();
+                                            int[] coordinates = playerMove.getWordCoordinates();
+                                            System.out.println();
+                                            char direction = playerMove.getWordDirection();
+
+                                            if (playerMove.validateWord(word, player, gameBoard, coordinates, direction)) {
+                                                boolean success = gameBoard.placeWord(word, coordinates, direction);
+                                                if (success) {
+                                                    int wordScore = ScoreSystem.wordScore(word);
+                                                    player.updateScore(wordScore);
+                                                    player.updateHand(word, bag);
+                                                    System.out.println("+--------------------------------------------------------+");
+                                                    System.out.println(player.getPlayerName() + " successfully placed the word: " + word + ": +" + wordScore + " Points");
+                                                    System.out.println("+--------------------------------------------------------+");
+                                                    wordPlaced = true;
+                                                } else {
+                                                    System.out.println("+----------------------------------+");
+                                                    System.out.println("Failed to place the word. Try again.");
+                                                    System.out.println("+----------------------------------+");
+                                                }
+                                            } else {
+                                                System.err.println("You don't have the letters for that word. Try again or enter '*' to skip.");
+                                            }
+
+                                            if (word.equalsIgnoreCase("/save")) {
+                                                SaveLoad saveLoad = new SaveLoad();
+                                                String gameState = saveLoad.getGame(gameBoard, players);
+                                                saveLoad.saveGame(gameState);
+                                            }
                                         }
                                     }
                                 }
