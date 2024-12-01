@@ -148,63 +148,8 @@ public class PlayGame {
                     }
                     break;
                 case 2:
-                    PlayerMove playerMoveLoad = new PlayerMove();
-                    SaveLoad saveLoad = new SaveLoad();
-                    GameBoard loadedBoard = new GameBoard();
-                    Bag loadedBag = new Bag();
-                    Player[] loadedPlayers = new Player[4];
-                    int numPlayers = saveLoad.loadGame(loadedBoard, loadedPlayers, loadedBag);
-
-                    boolean gameResumed = true;
-                    while (gameResumed) {
-                        for (int i = 0; i < numPlayers; i++) {
-                            Player player = loadedPlayers[i];
-                            boolean wordPlaced = false;
-                            while (!wordPlaced) {
-                                loadedBoard.displayBoard(loadedBoard.board, loadedBoard.multiplier);
-                                System.out.println("----------------------------------------------------------------");
-                                System.out.println("Type '/save' to save your game or '/quit' to exit without saving");
-                                System.out.println();
-                                String word = playerMoveLoad.getPlayerWord(player);
-
-                                if (word.equalsIgnoreCase("/save")) {
-                                    String gameState = saveLoad.getGame(loadedBoard, loadedPlayers);
-                                    saveLoad.saveGame(gameState);
-                                    System.out.println("Game saved successfully!");
-                                    continue;
-                                } else if (word.equalsIgnoreCase("/quit")) {
-                                    System.out.println("Exiting to the main menu...");
-                                    gameResumed = false;
-                                    break;
-                                } else if (word.equals("*")) {
-                                    System.out.println(player.getPlayerName() + " has skipped their turn.");
-                                    break;
-                                }
-
-                                int[] coordinates = playerMoveLoad.getWordCoordinates();
-                                char direction = playerMoveLoad.getWordDirection();
-
-                                if (playerMoveLoad.validateWord(word, player, loadedBoard, coordinates, direction)) {
-                                    boolean success = loadedBoard.placeWord(word, coordinates, direction);
-                                    if (success) {
-                                        int wordScore = ScoreSystem.wordScore(word, coordinates, direction, loadedBoard.multiplier, loadedBoard.board);
-                                        player.updateScore(wordScore);
-                                        player.updateHand(word, loadedBag);
-                                        System.out.println("+--------------------------------------------------------+");
-                                        System.out.println(player.getPlayerName() + " successfully placed the word: " + word + ": +" + wordScore + " Points");
-                                        System.out.println("+--------------------------------------------------------+");
-                                        wordPlaced = true;
-                                    } else {
-                                        System.out.println("+----------------------------------+");
-                                        System.out.println("Failed to place the word. Try again.");
-                                        System.out.println("+----------------------------------+");
-                                    }
-                                } else {
-                                    System.err.println("You don't have the letters for that word. Try again or enter '*' to skip.");
-                                }
-                            }
-                        }
-                    }
+                    System.err.println("I cannot do it. I have been trying to load any game files for days, and i know what your thinking... and yes i agree, i should've asked for help \n" +
+                            "however i had faith in myself to figure it out but alas i must fall on my sword and concede. I cannot do it, i am losing my mind but hey you can save files");
                     break;
                 case 3:
                     SaveLoad historyLoader = new SaveLoad();

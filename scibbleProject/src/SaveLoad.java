@@ -63,59 +63,7 @@ public class SaveLoad {
         }
     }
 
-    /**
-     * Method to ask user to type the name of a saved game file, they can then carry on using
-     * playgame functionality.
-     *
-     * @param gameBoard instance of GameBoard
-     * @param players instance of Player array
-     */
-    public int loadGame(GameBoard gameBoard, Player[] players, Bag bag) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the file name to load the game (e.g., 'mySave.txt'): ");
-        String fileName = scanner.nextLine();
 
-        int numPlayers = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            boolean isBoardSection = false;
-            boolean isPlayerSection = false;
-            int row = 0;
-
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith("Game Board:")) {
-                    isBoardSection = true;
-                    isPlayerSection = false;
-                    continue;
-                } else if (line.startsWith("Player Details:")) {
-                    isBoardSection = false;
-                    isPlayerSection = true;
-                    continue;
-                }
-
-                if (isBoardSection) {
-                    String[] tiles = line.split(" ");
-                    for (int column = 0; column < tiles.length; column++) {
-                        gameBoard.board[row][column] = tiles[column].equals(".") ? '\0' : tiles[column].charAt(0);
-                    }
-                    row++;
-                } else if (isPlayerSection) {
-                    String[] parts = line.split(" - ");
-                    String playerName = parts[0];
-                    int score = Integer.parseInt(parts[1].split(": ")[1]);
-                    char[] tiles = parts[2].split(": ")[1].toCharArray();
-
-                    Player player = new Player(playerName, bag);
-                    player.updateScore(score);
-                    System.arraycopy(tiles, 0, player.getLetters(), 0, tiles.length);
-                    players[numPlayers++] = player;
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error loading game " + e.getMessage());
-        }
-        return numPlayers;
-    }
 
     /**
      * method which will add the result of games to a text file so they can be viewed in the game histoy option of the menu

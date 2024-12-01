@@ -48,13 +48,13 @@ public class ScoreSystem {
             1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10
     };
 
-    public static int wordScore(String word, int[] startCoords, char direction, String[][] multiplier, char[][] board) {
+    public static int wordScore(String word, int[] startCoordinates, char direction, String[][] multiplier, char[][] board) {
         int score = 0;
         int wordMultiplier = 1;
 
         for (int i = 0; i < word.length(); i++) {
-            int row = startCoords[0] + (direction == 'V' ? i : 0);
-            int column = startCoords[1] + (direction == 'H' ? i : 0);
+            int row = startCoordinates[0] + (direction == 'V' ? i : 0);
+            int column = startCoordinates[1] + (direction == 'H' ? i : 0);
             char letter = word.charAt(i);
 
             int letterScore = letterValues[Character.toUpperCase(letter) - 'A'];

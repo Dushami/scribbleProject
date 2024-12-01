@@ -81,7 +81,7 @@ public class PlayerMove {
     }
 
     /** Method allowing players to only use the letters they have*/
-    public boolean validateWord(String word, Player player, GameBoard board, int[] startCoords, char direction) {
+    public boolean validateWord(String word, Player player, GameBoard board, int[] startCoordinates, char direction) {
         char[] playerLetters = player.getLetters();
         int[] letterCounts = new int[26];
         for (char inBag : playerLetters) {
@@ -91,8 +91,8 @@ public class PlayerMove {
         }
 
         /** allow use of letters on the board previously*/
-        int row = startCoords[0];
-        int col = startCoords[1];
+        int row = startCoordinates[0];
+        int col = startCoordinates[1];
 
         for (int i = 0; i < word.length(); i++) {
             int currentRow = row + (direction == 'V' ? i : 0);

@@ -121,10 +121,8 @@ public class GameBoard {
             System.out.printf("%2d |", i + 1);
             for (int j = 0; j < columns; j++) {
                 if (Character.isLetter(board[i][j])) {
-                    // Display placed letters normally
                     System.out.printf(" %2s ", board[i][j]);
                 } else if (multiplier[i][j] != null) {
-                    // Apply color based on multiplier type
                     String color = Reset;
                     switch (multiplier[i][j]) {
                         case "TW":
@@ -142,7 +140,6 @@ public class GameBoard {
                     }
                     System.out.printf(" %s%2s%s ", color, multiplier[i][j], Reset);
                 } else {
-                    // Display empty spaces
                     System.out.printf(" %2s ", ".");
                 }
             }
@@ -158,9 +155,9 @@ public class GameBoard {
     /**
      * Method to actually verify and place the word onto the board
      */
-    public boolean placeWord(String word, int[] startCoords, char direction) {
-        int row = startCoords[0];
-        int column = startCoords[1];
+    public boolean placeWord(String word, int[] startCoordinates, char direction) {
+        int row = startCoordinates[0];
+        int column = startCoordinates[1];
         boolean connectsToExisting = false;
 
         /** Check the word can fit on the board*/
