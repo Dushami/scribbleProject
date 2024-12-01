@@ -112,7 +112,7 @@ public class SaveLoad {
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error loading game" + e.getMessage());
+            System.err.println("Error loading game " + e.getMessage());
         }
         return numPlayers;
     }

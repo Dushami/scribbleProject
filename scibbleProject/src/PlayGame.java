@@ -191,6 +191,66 @@ public class PlayGame {
                 case 3:
                     break;
                 case 4:
+                    boolean goBack = false;
+                    Scanner backToMenu = new Scanner(System.in);
+                    while (!goBack) {
+                        System.out.println("--------------------------------------------------------------------------------------------");
+                        System.out.println("                                         Scribble                                           ");
+                        System.out.println("--------------------------------------------------------------------------------------------");
+                        System.out.println("                                  How To Play Scribble:                                     ");
+                        System.out.println();
+                        System.out.println("1. Select your opponent / specify quantity & names");
+                        System.out.println("2. Using the letters in your hand type the word you would like to play");
+                        System.out.println("3. Then specify the position you would like to place the first letter");
+                        System.out.println("4. Then specify the direction you would like your word to be placed");
+                        System.out.println("5. If you wish to skip your turn type: '*' instead of your desired word");
+                        System.out.println("6. Type: '/save' or '/quit' if you want to save, or quit without saving");
+                        System.out.println();
+                        System.out.println("--------------------------------------------------------------------------------------------");
+                        System.out.print("                                      Rules of Scribble                                       ");
+                        System.out.println();
+                        System.out.println("1. The first word MUST be placed whereby it connects to the centre square (8 8)");
+                        System.out.println("2. Any word after must connect in some way to another word on the board");
+                        System.out.println("3. A word must be placed either horizontally or vertically");
+                        System.out.println("4. A player can opt to skip their turn by typing: '*'");
+                        System.out.println("5. After a word is place, it will be scored and points allocated to that player");
+                        System.out.println("6. A winner will be crowned once one of the players reaches 200 points");
+                        System.out.println("7. The game will automatically stop after each player has taken 10 turn. Most points wins!");
+                        System.out.println();
+                        System.out.println("--------------------------------------------------------------------------------------------");
+                        System.out.println("                                      Scoring System                                        ");
+                        System.out.println();
+                        System.out.println("Each player will start with 0 points");
+                        System.out.println("When a word is played the points of each letter will be totalled and added to the score");
+                        System.out.println("Each individual letter has its own amount of points based on difficulty to use");
+                        System.out.println("--------------------------------------");
+                        System.out.println("1 Point: A, E, I, O, U, L, N, S, T, R");
+                        System.out.println("2 Point: D, G");
+                        System.out.println("3 Point: B, C, M, P");
+                        System.out.println("4 Point: F, H, V, W, Y");
+                        System.out.println("5 Point: K");
+                        System.out.println("8 Point: J, X");
+                        System.out.println("10 Point: Q, Z");
+                        System.out.println();
+                        System.out.println("For Example, TRICKY = (1 + 1 + 1 + 3 + 5 + 4) = 15 Points");
+                        System.out.println("--------------------------------------");
+                        System.out.println();
+                        System.out.println("Around the board there are multipliers: DL, DW, TL, TW");
+                        System.out.println("DL - Double Letter, this will double the value of any letter placed on this tile");
+                        System.out.println("DW - Double Word, this will double the value of the entire word running on this tile");
+                        System.out.println("TL - Triple Letter, this will triple the value of any letter placed on this tile");
+                        System.out.println("TW - Triple Word, this will triple the value of the entire word running on this tile");
+                        System.out.println("--------------------------------------------------------------------------------------------");
+                        System.out.println();
+                        System.out.println("Type '/back' to return to menu");
+                        String decision = backToMenu.nextLine();
+                        while (!decision.equalsIgnoreCase("/back")){
+                            System.err.println("Type /back to go back to menu");
+                            decision = backToMenu.nextLine();
+                        }
+                        break;
+                    }
+
                     break;
                 case 5:
                     System.out.println("Thank you for playing Scribble, Now Exiting program");
